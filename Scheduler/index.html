@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SJC Interactive Calendar</title>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <style>
+        :root { --sjc-red: #8B0000; --sjc-gold: #FFD700; }
+        body { background-color: #121212; color: white; font-family: sans-serif; margin: 0; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; max-width: 1000px; margin: 0 auto 20px; }
+        .add-btn { 
+            background: var(--sjc-gold); color: var(--sjc-red); 
+            padding: 10px 20px; text-decoration: none; font-weight: bold; border-radius: 4px;
+        }
+        #calendar { 
+            max-width: 1000px; margin: 0 auto; background: #1e1e1e; 
+            padding: 20px; border: 1px solid var(--sjc-gold); border-radius: 8px; 
+        }
+        .fc-toolbar-title { color: var(--sjc-gold) !important; }
+        .fc-button-primary { background-color: var(--sjc-red) !important; border: 1px solid var(--sjc-gold) !important; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>SJC Schedule</h1>
+        <a href="add-event" class="add-btn">
+    </div>
+    <div id='calendar'></div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          events: JSON.parse(localStorage.getItem('sjc-events') || '[]'),
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek'
+          }
+        });
+        calendar.render();
+      });
+    </script>
+</body>
+</html>

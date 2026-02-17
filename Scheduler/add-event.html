@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Event - SJC</title>
+    <style>
+        body { background-color: #8B0000; color: #FFD700; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { border: 3px solid #FFD700; padding: 30px; border-radius: 15px; width: 400px; text-align: center; }
+        input { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
+        button { background: #FFD700; color: #8B0000; border: none; padding: 15px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .back-link { display: block; margin-top: 15px; color: white; text-decoration: none; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Add Schedule Event</h2>
+        <form name="sjc-schedule" method="POST" data-netlify="true" id="eventForm">
+            <input type="hidden" name="form-name" value="sjc-schedule" />
+            
+            <label>Date</label>
+            <input type="date" id="date" name="date" required>
+            
+            <label>Event Name</label>
+            <input type="text" id="title" name="title" placeholder="Meeting, Exam, etc." required>
+            
+            <button type="submit">Save Event</button>
+        </form>
+        <a href="https://schedulerjsua.netlify.app/" class="back-link">← Cancel and Go Back</a>
+    </div>
+
+    <script>
+        // Script to save to LocalStorage so it shows on the calendar immediately
+        document.getElementById('eventForm').onsubmit = function() {
+            const title = document.getElementById('title').value;
+            const start = document.getElementById('date').value;
+            
+            const existingEvents = JSON.parse(localStorage.getItem('sjc-events') || '[]');
+            existingEvents.push({ title, start });
+            localStorage.setItem('sjc-events', JSON.stringify(existingEvents));
+            
+            // The form will still submit to Netlify, then the user can go back
+        };
+    </script>
+</body>
+</html>
